@@ -1,0 +1,84 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  * { box-sizing: border-box; }
+  body { @apply font-sans bg-canvas text-charcoal antialiased; }
+  ::-webkit-scrollbar { width: 6px; height: 6px; }
+  ::-webkit-scrollbar-track { @apply bg-transparent; }
+  ::-webkit-scrollbar-thumb { @apply bg-navy/15 rounded-full; }
+  ::-webkit-scrollbar-thumb:hover { @apply bg-navy/30; }
+}
+
+@layer components {
+  /* ── Buttons ── */
+  .btn-lime {
+    @apply bg-lime text-navy font-extrabold px-5 py-2.5 rounded-xl
+           hover:bg-lime-dark active:scale-[0.98] transition-all duration-150
+           disabled:opacity-40 disabled:cursor-not-allowed disabled:active:scale-100
+           flex items-center gap-2 justify-center shadow-card;
+  }
+  .btn-navy {
+    @apply bg-navy text-white font-bold px-5 py-2.5 rounded-xl
+           hover:bg-navy-dark active:scale-[0.98] transition-all duration-150
+           disabled:opacity-40 disabled:cursor-not-allowed
+           flex items-center gap-2 justify-center;
+  }
+  .btn-ghost {
+    @apply bg-white text-navy font-semibold px-5 py-2.5 rounded-xl border border-navy/10
+           hover:border-navy/30 hover:bg-navy/[0.03] active:scale-[0.98] transition-all duration-150
+           flex items-center gap-2 justify-center;
+  }
+  .btn-danger {
+    @apply bg-red-500/10 text-red-600 font-bold px-5 py-2.5 rounded-xl
+           hover:bg-red-500 hover:text-white active:scale-[0.98] transition-all duration-150
+           flex items-center gap-2 justify-center;
+  }
+  .btn-icon {
+    @apply w-9 h-9 rounded-lg flex items-center justify-center transition-all duration-150
+           text-charcoal/50 hover:text-navy hover:bg-navy/5;
+  }
+
+  /* ── Inputs ── */
+  .input-field {
+    @apply w-full border border-navy/10 rounded-xl px-3.5 py-2.5 text-sm outline-none
+           bg-white placeholder:text-charcoal/30
+           focus:border-lime-dark focus:ring-4 focus:ring-lime/20 transition-all duration-150;
+  }
+  .input-label {
+    @apply block text-[11px] font-bold text-navy/60 uppercase tracking-wider mb-1.5;
+  }
+
+  /* ── Cards & Surfaces ── */
+  .card { @apply bg-white rounded-2xl border border-navy/[0.06] shadow-card; }
+  .card-dark { @apply bg-charcoal rounded-2xl text-white; }
+
+  /* ── Status badges ── */
+  .badge { @apply text-[11px] font-extrabold px-2.5 py-1 rounded-full inline-flex items-center gap-1 tracking-wide; }
+  .badge-borrowed   { @apply badge bg-navy/[0.08] text-navy; }
+  .badge-returned   { @apply badge bg-lime/25 text-navy; }
+  .badge-overdue    { @apply badge bg-red-500/10 text-red-600; }
+  .badge-available  { @apply badge bg-lime/25 text-navy; }
+  .badge-unavailable{ @apply badge bg-charcoal/[0.08] text-charcoal/50; }
+
+  /* ── Stat tiles ── */
+  .stat-tile {
+    @apply card p-5 flex items-center gap-4 relative overflow-hidden;
+  }
+  .stat-tile__icon {
+    @apply w-11 h-11 rounded-xl flex items-center justify-center text-lg flex-shrink-0;
+  }
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+.spin { animation: spin 0.7s linear infinite; transform-origin: center; }
+
+@keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:translateY(0); } }
+.fade-up { animation: fadeUp 0.25s ease; }
+
+@keyframes pulseLime {
+  0%,100% { box-shadow: 0 0 0 0 rgba(198,255,61,0.35); }
+  50%     { box-shadow: 0 0 0 6px rgba(198,255,61,0); }
+}
+.pulse-lime { animation: pulseLime 2s ease-in-out infinite; }
