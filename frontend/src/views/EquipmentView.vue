@@ -82,21 +82,35 @@ const search    = ref('')
 const catFilter = ref('')
 const availOnly = ref(false)
 
-const categories = computed(() => [...new Set(items.value.map(e => e.category))])
+const categories = ref([])
+
+async function loadCategories() {
+  try {
+    const res = await api.getCategories()
+    categories.value = res.data
+  } catch (err) {
+    console.error(err)
+  }
+}
 
 async function doSearch() {
   loading.value = true
   try {
     const params = {}
-    if (search.value)    params.search        = search.value
-    if (catFilter.value) params.category       = catFilter.value
+    if (search.value) params.search = search.value
+    if (catFilter.value) params.category = catFilter.value
     if (availOnly.value) params.available_only = 'true'
+
     const res = await api.getEquipment(params)
     items.value = res.data
+    console.log("Categories after search:", categories.value)
   } finally {
     loading.value = false
   }
 }
 
-onMounted(doSearch)
+onMounted(() => {
+  loadCategories()
+  doSearch()
+})
 </script>

@@ -4,7 +4,6 @@ from flask_bcrypt import Bcrypt
 from flask_cors import CORS
 import os, traceback
 from datetime import datetime, timedelta
-
 app = Flask(__name__)
 
 # ── DATABASE ───────────────────────────────────────────────────────────────
@@ -355,6 +354,16 @@ def get_equipment():
         } for r in rows])
     except Exception as e:
         traceback.print_exc(); return jsonify({"message":"Server error"}), 500
+@app.route("/api/categories", methods=["GET"])
+def get_categories():
+    rows = db.session.execute(db.text("""
+        SELECT DISTINCT category
+        FROM equipment
+        WHERE is_active = 1
+        ORDER BY category
+    """)).fetchall()
+
+    return jsonify([r[0] for r in rows])
 
 @app.route("/api/equipment/<int:eid>", methods=["GET"])
 def get_equipment_detail(eid):
