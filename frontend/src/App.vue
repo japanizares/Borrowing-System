@@ -6,8 +6,8 @@
         <Topbar />
         <main class="p-4 sm:p-6 lg:p-8 max-w-7xl mx-auto">
           <router-view v-slot="{ Component }">
-            <Transition name="page" mode="out-in">
-              <component :is="Component" />
+            <Transition name="page">
+              <component :is="Component" :key="$route.path" />
             </Transition>
           </router-view>
         </main>
@@ -28,7 +28,10 @@ onMounted(() => auth.load())
 </script>
 
 <style>
-.page-enter-active, .page-leave-active { transition: all 0.18s ease; }
-.page-enter-from { opacity: 0; transform: translateY(6px); }
-.page-leave-to   { opacity: 0; transform: translateY(-6px); }
+.page-enter-active,
+.page-leave-active  { transition: opacity 0.15s ease; }
+
+.page-leave-active  { position: absolute; width: 100%; }
+.page-leave-to      { opacity: 0; }
+.page-enter-from    { opacity: 0; }
 </style>
