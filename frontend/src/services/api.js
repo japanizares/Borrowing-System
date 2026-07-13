@@ -1,6 +1,6 @@
 import axios from 'axios'
 
-const BASE = import.meta.env.VITE_API_URL || 'http://127.0.0.1:5000/api'
+const BASE = import.meta.env.VITE_API_URL || 'https://borrowing-system-xdy6.onrender.com/api'
 
 const http = axios.create({ baseURL: BASE })
 
@@ -20,6 +20,7 @@ export default {
 
   // ── Equipment ──────────────────────────────────────
   getEquipment:     (p)     => http.get('/equipment', { params: p }),
+  getCategories: () => http.get('/categories'),
   getEquipmentById: (id)    => http.get(`/equipment/${id}`),
   addEquipment:     (d)     => http.post('/equipment', d),
   updateEquipment:  (id, d) => http.put(`/equipment/${id}`, d),
